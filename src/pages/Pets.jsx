@@ -4,19 +4,16 @@ import { deletePet, getPets } from "../api/pets"
 import { useEffect, useState } from "react"
 import Loader from "../components/Loader"
 import toast from "react-hot-toast"
+import { getClientes } from "../api/clientes"
 
 function Pets() {
   const [pets, setPets] = useState(null)
   const [clientes, setClientes] = useState([])
 
-  async function carregarClientes() {
-    try {
-      const response = await fetch("http://localhost:3000/clientes")
-      const data = await response.json()
-      setClientes(data)
-    } catch (error) {
-      console.error("Erro ao carregar clientes:", error)
-    }
+  function carregarClientes() {
+    getClientes().then((dados) => {
+      setClientes(dados)
+    })
   }
 
   function carregarPets() {
